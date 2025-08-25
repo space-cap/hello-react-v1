@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(/C:\\workdir\\github-space-cap\\hello-react-v1/**)",
+      "Read(/C:\\workdir\\github-space-cap\\hello-react-v1/**)",
+      "Read(/C:\\workdir\\github-space-cap\\hello-react-v1/**)",
+      "Read(/C:\\workdir\\github-space-cap\\hello-react-v1\\backend/**)",
+      "Read(/C:\\workdir\\github-space-cap\\hello-react-v1\\backend\\src\\main\\java\\com\\ezlevup\\helloreact\\controller/**)",
+      "Read(/C:\\workdir\\github-space-cap\\hello-react-v1/**)",
+      "Read(/C:\\workdir\\github-space-cap\\hello-react-v1/**)",
+      "Read(/C:\\workdir\\github-space-cap\\hello-react-v1/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
