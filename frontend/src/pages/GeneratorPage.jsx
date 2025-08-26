@@ -77,12 +77,12 @@ const ChatPanel = ({ messages, onGenerate, onSelectVersion }) => {
   };
 
   return (
-    <div className="w-full md:w-96 bg-white shadow-lg flex flex-col h-full">
+    <div className="w-full md:w-96 bg-white flex flex-col h-full">
       {/* 대화 내용이 표시되는 영역 */}
       <div className="flex-1 p-6 space-y-4 overflow-y-auto">
         {messages.map(msg => (
           <div key={msg.id} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div className={`p-3 rounded-lg max-w-xs ${msg.type === 'user' ? 'bg-gray-200' : 'bg-white'}`}>
+            <div className={`p-3 rounded-lg max-w-xs ${msg.type === 'user' ? 'bg-gray-200' : 'bg-white border'}`}>
               {/* 메시지 타입에 따라 다른 UI 렌더링 */}
               {msg.type === 'version' ? (
                 <div>
@@ -130,10 +130,14 @@ export default function GeneratorPage() {
   // 대화 내용을 저장할 배열 상태
   const [messages, setMessages] = useState([]);
   const [selectedVersion, setSelectedVersion] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [showVariables, setShowVariables] = useState(false);
 
   // AI 생성 요청 핸들러
   const handleGenerate = (prompt) => {
+    setIsLoading(true);
+    isLoading;
+      
     // 1. 사용자 메시지를 대화에 추가
     const userMessage = { id: Date.now(), type: 'user', text: prompt };
     setMessages(prev => [...prev, userMessage]);
@@ -156,6 +160,7 @@ export default function GeneratorPage() {
       };
       setMessages(prev => [...prev, botMessage]);
       setSelectedVersion(newVersionData); // 새로 생성된 버전을 바로 미리보기에 표시
+      setIsLoading(false);
     }, 1500);
   };
   
@@ -167,33 +172,40 @@ export default function GeneratorPage() {
   }, []);
 
   return (
-    <div className="flex h-screen font-sans bg-gradient-to-br from-blue-100 via-teal-100 to-green-100">
-      {/* 왼쪽 챗봇 패널 */}
-      <ChatPanel 
-        messages={messages}
-        onGenerate={handleGenerate}
-        onSelectVersion={setSelectedVersion}
-      />
-      
-      {/* 오른쪽 미리보기 영역 */}
-      <main className="flex-1 flex flex-col">
-        {/* 상단 헤더 */}
-        <header className="flex justify-end items-center p-4">
-          <div className="flex items-center space-x-4">
-            <span className="text-sm text-gray-600">변수값 표시</span>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" checked={showVariables} onChange={() => setShowVariables(!showVariables)} className="sr-only peer" />
-              <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
-            </label>
-            <button className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 text-sm font-medium">
-              템플릿 저장하기
-            </button>
-          </div>
-        </header>
+    // 전체 페이지를 감싸는 컨테이너 div 추가
+    <div className="bg-gray-100 min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8">
+      {/* 앱의 메인 컨테이너 (그림자, 둥근 모서리 적용) */}
+      <div className="flex h-[85vh] w-full max-w-7xl rounded-2xl shadow-2xl overflow-hidden">
+        {/* 왼쪽 챗봇 패널 */}
+        <ChatPanel 
+          messages={messages}
+          onGenerate={handleGenerate}
+          onSelectVersion={setSelectedVersion}
+        />
         
-        {/* 미리보기 컴포넌트 */}
-        <Preview version={selectedVersion} showVariables={showVariables} />
-      </main>
+        {/* 오른쪽 미리보기 영역 */}
+        <main className="flex-1 flex flex-col bg-gradient-to-br from-blue-100 via-teal-100 to-green-100">
+          {/* 상단 헤더 */}
+          <header className="flex justify-end items-center p-4">
+            <div className="flex items-center space-x-4">
+              <span className="text-sm text-gray-600">변수값 표시</span>
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" checked={showVariables} onChange={() => setShowVariables(!showVariables)} className="sr-only peer" />
+                <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
+              </label>
+              <button className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 text-sm font-medium">
+                보관함에 저장
+                          </button>
+                          <button className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 text-sm font-medium">
+                템플릿 복사
+              </button>
+            </div>
+          </header>
+          
+          {/* 미리보기 컴포넌트 */}
+          <Preview version={selectedVersion} showVariables={showVariables} />
+        </main>
+      </div>
     </div>
   );
 }
