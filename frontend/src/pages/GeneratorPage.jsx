@@ -130,13 +130,10 @@ export default function GeneratorPage() {
   // 대화 내용을 저장할 배열 상태
   const [messages, setMessages] = useState([]);
   const [selectedVersion, setSelectedVersion] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [showVariables, setShowVariables] = useState(false);
 
   // AI 생성 요청 핸들러
   const handleGenerate = (prompt) => {
-    setIsLoading(true);
-    
     // 1. 사용자 메시지를 대화에 추가
     const userMessage = { id: Date.now(), type: 'user', text: prompt };
     setMessages(prev => [...prev, userMessage]);
@@ -159,7 +156,6 @@ export default function GeneratorPage() {
       };
       setMessages(prev => [...prev, botMessage]);
       setSelectedVersion(newVersionData); // 새로 생성된 버전을 바로 미리보기에 표시
-      setIsLoading(false);
     }, 1500);
   };
   
@@ -190,7 +186,7 @@ export default function GeneratorPage() {
               <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
             </label>
             <button className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 text-sm font-medium">
-              이 카톡 발송하기
+              템플릿 저장하기
             </button>
           </div>
         </header>
