@@ -43,7 +43,7 @@ const Header = () => {
             로그인
           </Link>
           {/* HOME-001-HDR-003: 회원가입 버튼 */}
-          <a href="#" className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors text-sm font-medium">
+          <a href="/signup" className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors text-sm font-medium">
             회원가입
           </a>
         </nav>
