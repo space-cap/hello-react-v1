@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // 아이콘 컴포넌트 (Lucide 아이콘 스타일의 인라인 SVG)
 const BotIcon = (props) => (
@@ -38,9 +39,9 @@ const Header = () => {
         </a>
         <nav className="space-x-4">
           {/* HOME-001-HDR-002: 로그인 버튼 */}
-          <a href="#" className="text-gray-600 hover:text-indigo-600 transition-colors">
+          <Link to="/login" className="text-gray-600 hover:text-indigo-600 transition-colors">
             로그인
-          </a>
+          </Link>
           {/* HOME-001-HDR-003: 회원가입 버튼 */}
           <a href="#" className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors text-sm font-medium">
             회원가입

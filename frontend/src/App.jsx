@@ -1,11 +1,17 @@
 import React from 'react';
-import LandingPage from './pages/LandingPage'; // 1. LandingPage 컴포넌트를 불러옵니다.
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LandingPage from './pages/LandingPage';
+import LoginPage from './pages/LoginPage';
 import './App.css';
 
 function App() {
-  // 2. 기존 내용을 지우고 LandingPage 컴포넌트를 반환합니다.
   return (
-    <LandingPage />
+    <Router>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
+    </Router>
   );
 }
 
