@@ -21,17 +21,50 @@ export default function SignupPage() {
   };
 
   // 이메일 회원가입 버튼 클릭 시 실행될 함수
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault(); // 폼 제출 시 페이지 새로고침 방지
 
     // 비밀번호와 비밀번호 확인 값이 일치하는지 검사
     if (formData.password !== formData.passwordConfirm) {
-      alert('비밀번호가 일치하지 않습니다.'); // 실제 앱에서는 alert 대신 UI 메시지를 사용하세요.
+      alert('비밀번호가 일치하지 않습니다.');
       return;
     }
 
-    console.log('이메일로 회원가입 시도:', formData);
-    // TODO: 실제 이메일 회원가입 API 호출 로직 구현
+    try {
+      const response = await fetch('http://localhost:8080/api/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+          nickname: formData.nickname,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert('회원가입이 완료되었습니다!');
+        // 회원가입 성공 시 로그인 페이지로 이동하거나 다른 처리
+        console.log('회원가입 성공:', data.user);
+      } else {
+        console.error('회원가입 실패:', data);
+        if (data.fieldErrors) {
+          // 필드별 오류 메시지 표시
+          const errorMessages = Object.entries(data.fieldErrors).map(
+            ([field, message]) => `${field}: ${message}`
+          ).join('\n');
+          alert(`입력값 오류:\n${errorMessages}`);
+        } else {
+          alert(data.message || '회원가입에 실패했습니다.');
+        }
+      }
+    } catch (error) {
+      console.error('회원가입 에러:', error);
+      alert('회원가입 중 오류가 발생했습니다.');
+    }
   };
 
   // 카카오로 시작하기 버튼 클릭 시 실행될 함수
