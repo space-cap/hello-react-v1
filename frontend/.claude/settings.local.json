@@ -17,7 +17,12 @@
       "Bash(git add:*)",
       "Bash(git push:*)",
       "Bash(git commit:*)",
-      "Bash(npm uninstall:*)"
+      "Bash(npm uninstall:*)",
+      "Read(/C:\\workdir\\github-space-cap\\hello-react-v1\\backend/**)",
+      "Read(/C:\\workdir\\github-space-cap\\hello-react-v1\\backend\\src\\main\\java\\com\\ezlevup\\helloreact/**)",
+      "Read(/C:\\workdir\\github-space-cap\\hello-react-v1\\backend\\src\\main\\java\\com\\ezlevup\\helloreact/**)",
+      "Read(/C:\\workdir\\github-space-cap\\hello-react-v1\\backend\\src\\main\\java\\com\\ezlevup\\helloreact\\controller/**)",
+      "Bash(./mvnw clean compile)"
     ],
     "deny": [],
     "ask": []
